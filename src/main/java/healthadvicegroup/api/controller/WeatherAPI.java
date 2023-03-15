@@ -1,4 +1,4 @@
-package healthadvicegroup.api.controller.weather;
+package healthadvicegroup.api.controller;
 
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.ResponseBody;
@@ -11,13 +11,13 @@ import spark.Route;
 import java.net.URI;
 
 public class WeatherAPI {
-    private static final String baseURL = "http://api.weatherapi.com/v1";
-    private static final String apiKey = "9f3b43d59c5746b9b77154059230902";
+    private static final String BASE_URL = "http://api.weatherapi.com/v1";
+    private static final String API_KEY = "9f3b43d59c5746b9b77154059230902";
 
     public static Route fetchForecast = (Request request, Response response) -> {
         String locastionString = request.queryParams("location");
-        URI uri = new URIBuilder(baseURL + "/forecast.json")
-                .addParameter("key", apiKey)
+        URI uri = new URIBuilder(BASE_URL + "/forecast.json")
+                .addParameter("key", API_KEY)
                 .addParameter("q", locastionString)
                 .addParameter("days", "7")
                 .addParameter("aqi", "yes")
