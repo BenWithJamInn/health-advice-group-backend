@@ -1,11 +1,12 @@
 package healthadvicegroup.api.controller.article;
 
-import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NonNull;
 
 import java.util.UUID;
 
-@AllArgsConstructor
+@Data
 public class CreateArticleResponse {
-    private String status;
-    private UUID id;
+    @NonNull private String status;
+    @NonNull private UUID id;
 }

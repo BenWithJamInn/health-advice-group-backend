@@ -1,23 +1,23 @@
 package healthadvicegroup.api.controller.article;
 
-import healthadvicegroup.api.controller.ArticleController;
+import com.mongodb.lang.Nullable;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
+import lombok.NonNull;
 import lombok.Setter;
 import org.bson.Document;
 
-import javax.print.Doc;
 import java.util.List;
 import java.util.UUID;
 
-@Getter
+@Data
 @AllArgsConstructor
 public class ArticleData {
-    @Setter private UUID id;
-    private String title;
-    private String description;
-    private String body;
-    private List<String> categories;
+    @NonNull @Setter private UUID id;
+    @NonNull private String title;
+    @NonNull private String description;
+    @Nullable private String body;
+    @NonNull private List<String> categories;
 
     /**
      * Turns this data into a {@link Document}

@@ -2,6 +2,7 @@ package healthadvicegroup.api;
 
 import com.google.gson.Gson;
 import com.squareup.okhttp.OkHttpClient;
+import healthadvicegroup.api.controller.AccountController;
 import healthadvicegroup.api.controller.ArticleController;
 import healthadvicegroup.api.controller.WeatherAPI;
 import healthadvicegroup.api.database.DatabaseManager;
@@ -50,6 +51,10 @@ public class Main {
                get("/data/:id", ArticleController.fetchArticleData);
                post("/filter", ArticleController.getArticleFromFilter);
                post("/", ArticleController.createArticle);
+            });
+            path("/account", () -> {
+                post("/signup", AccountController.signUp);
+                post("/signin", AccountController.signIn);
             });
             exception(Exception.class, (Exception exc, Request request, Response response) -> {
                 exc.printStackTrace();
