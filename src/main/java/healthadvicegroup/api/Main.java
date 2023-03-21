@@ -40,7 +40,7 @@ public class Main {
                 });
 
         before(((request, response) -> {
-            response.header("Access-Control-Allow-Origin", "*");
+            response.header("Access-Control-Allow-Origin", "http://localhost:3000");
         }));
 
         path("/api/v1", () -> {

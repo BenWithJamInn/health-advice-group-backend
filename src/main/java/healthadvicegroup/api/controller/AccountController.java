@@ -60,7 +60,7 @@ public class AccountController {
         Document user = userList.first();
         if (user != null) {
             response.status(400);
-            return Main.getGson().toJson(new AuthResponse("failed", "Account with this username already exists."));
+            return Main.getGson().toJson(new AuthResponse("failed", "Account with this email already exists."));
         }
         // hash password
         String salt = BCrypt.gensalt();
@@ -101,12 +101,12 @@ public class AccountController {
         Document user = users.first();
         if (user == null) {
             response.status(400);
-            return Main.getGson().toJson(new AuthResponse("failed", "No account with that username exists."));
+            return Main.getGson().toJson(new AuthResponse("failed", "Invalid email or password."));
         }
         // compare passwords
         if (!BCrypt.checkpw(authRequest.getPassword(), user.getString("password"))) {
             response.status(401);
-            return Main.getGson().toJson(new AuthResponse("failed", "Unauthorised."));
+            return Main.getGson().toJson(new AuthResponse("failed", "Invalid email or password."));
         }
         // gen new token and update db
         String token = genToken();
