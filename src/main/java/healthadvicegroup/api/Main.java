@@ -1,9 +1,11 @@
 package healthadvicegroup.api;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import healthadvicegroup.api.controller.AccountController;
 import healthadvicegroup.api.controller.ArticleController;
+import healthadvicegroup.api.controller.HealthLogController;
 import healthadvicegroup.api.controller.WeatherAPI;
 import healthadvicegroup.api.database.DatabaseManager;
 import lombok.Getter;
@@ -14,7 +16,9 @@ import static spark.Spark.*;
 
 public class Main {
     @Getter private static final OkHttpClient client = new OkHttpClient();
-    @Getter private static final Gson gson = new Gson();
+    @Getter private static final Gson gson = new GsonBuilder()
+            .setDateFormat("yyyy-MM-dd'T'HH:mm:ssX")
+            .create();
 
     public static void main(String[] args) {
         // connect to mongoDB
@@ -56,9 +60,13 @@ public class Main {
                 post("/signup", AccountController.signUp);
                 post("/signin", AccountController.signIn);
             });
+            path("/healthlog", () -> {
+                get("/", HealthLogController.fetchHealthLogs);
+                post("/new", HealthLogController.newHealthLog);
+            });
             exception(Exception.class, (Exception exc, Request request, Response response) -> {
-                exc.printStackTrace();
                 response.status(500);
+                exc.printStackTrace();
             });
         });
     }

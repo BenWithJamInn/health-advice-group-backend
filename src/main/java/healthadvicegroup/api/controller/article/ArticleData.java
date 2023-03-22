@@ -34,6 +34,13 @@ public class ArticleData {
         return doc;
     }
 
+    /**
+     * Returns {@link ArticleData} from a {@link Document}
+     *
+     * @param document The document to deserialize
+     *
+     * @return The new instance
+     */
     public static ArticleData fromDocument(Document document) {
         return new ArticleData(
                 UUID.fromString(document.getString("_id")),

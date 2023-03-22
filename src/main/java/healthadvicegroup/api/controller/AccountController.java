@@ -4,6 +4,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Updates;
 import healthadvicegroup.api.Main;
+import healthadvicegroup.api.controller.account.AccountInfo;
 import healthadvicegroup.api.controller.account.AccountType;
 import healthadvicegroup.api.controller.account.AuthRequest;
 import healthadvicegroup.api.controller.account.AuthResponse;
@@ -134,5 +135,22 @@ public class AccountController {
         byte[] randomByteArray = new byte[32];
         secureRandom.nextBytes(randomByteArray);
         return base64Encoder.encodeToString(randomByteArray);
+    }
+
+    /**
+     * Retrieve account info from token, null if no account is found
+     *
+     * @param token The auth token
+     *
+     * @return The account info or null
+     */
+    public static AccountInfo getAccountInfo(String token) {
+        FindIterable<Document> documents = collection.find(new Document("token", token));
+        Document document = documents.first();
+        // if no documents then there is no account
+        if (document == null) {
+            return null;
+        }
+        return AccountInfo.fromDocument(document);
     }
 }
