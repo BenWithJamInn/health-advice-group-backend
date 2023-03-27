@@ -54,7 +54,11 @@ public class AccountController {
         Matcher matcher = passwordCheck.matcher(authRequest.getPassword());
         if (!matcher.find()) {
             response.status(400);
-            return Main.getGson().toJson(new AuthResponse("failed", "Invalid Password."));
+            return Main.getGson().toJson(new AuthResponse("failed", "Invalid Password Complexity."));
+        }
+        if (authRequest.getPassword().length() > 300) {
+            response.status(400);
+            return Main.getGson().toJson(new AuthResponse("failed", "Invalid Password Length."));
         }
         // check if email already exists
         FindIterable<Document> userList = collection.find(new Document("username", authRequest.getUsername()));
